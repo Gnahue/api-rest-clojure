@@ -21,7 +21,7 @@
 (defn db-find-all-cars [] (rdb/keyspace db :cars))
 
 ;; Finds a car by id
-(defn db-find-car-by-id [id] (rdb/where db :cars :id (parse-number id)))  
+(defn db-find-car-by-id [id] (rdb/where db :cars :id (parse-number id)))
 
 ;; Stores a new car
 (defn db-store-car [car] (rdb/insert db :cars car))
@@ -40,13 +40,17 @@
    :color "Red"})
 
 (defroutes app-routes
-  (GET "/example/api/car" [] 
-    {:status 200 :body (db-find-all-cars)}
+  (GET "/example/api/car" []
+    {:headers {"Access-Control-Allow-Origin" "*"
+    "Access-Control-Allow-Methods" "GET, POST, PUT, OPTIONS"}
+    :status 200 :body (db-find-all-cars)}
   )
 
-  (GET "/example/api/car/:id" [id] 
-    {:status 200 :body (db-find-car-by-id id)}
-  )  
+  (GET "/example/api/car/:id" [id]
+    { :headers {"Access-Control-Allow-Origin" "*"
+      "Access-Control-Allow-Methods" "GET, POST, PUT, OPTIONS"}
+      :status 200 :body (db-find-car-by-id id)}
+  )
 
   (POST "/example/api/car" request
     (let [id (get-in request [:params :id])
@@ -54,14 +58,14 @@
           model (get-in request [:params :model])
           color (get-in request [:params :color])
           car {:id id :brand brand :model model :color color}]
-      (db-store-car car)     
+      (db-store-car car)
       {:status 201 :body car}
     )
   )
 
   (route/resources "/")
 
-  (route/not-found "Not Found"))
+  (route/not-found "Not encontrado"))
 
 (def app
   (-> (handler/api app-routes)

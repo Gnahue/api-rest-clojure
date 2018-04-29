@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+
+<body>
+  <h1> esto esta traido desde jquery conectandose a local host puerto :3000 <h1>
+  <p> al hacer click en get all lo que hace es conectar a http://localhost:3000/example/api/car
+    y trae el json con esa respuesta.<p>
+
+
+<button onclick="getAllCars();">get all </button>
+<table>
+      <thead>
+      <th>Id</th>
+      <th>Brand</th>
+      <th>model</th>
+      <th>color</th>
+      </thead>
+      <tbody id="tbody">
+      </tbody>
+
+</table>
+<script>
+
+function getAllCars(){
+
+var stringUrl = 'http://localhost:3000/example/api/car';
+$("#tbody").empty();
+            $.ajax({
+
+                type : "GET",
+                contentType : "application/x-www-form-urlencoded; charset=utf-8",
+                url : stringUrl,
+                data : {},
+                cache : false,
+                success : function(response) {
+                $.each(response, function( index,registro ) {
+                $("#tbody").append('<tr><td>'+registro.id+'</td><td>'+registro.brand+'</td><td>'+registro.model+'</td><td>'+registro.color+'</td></tr>');
+                  });
+                },
+                error : function(xhr, textStatus, errorThrown) {
+                    console.log("error : " + textStatus);
+                }
+            });
+}
+</script>
+</body>
+</html>
