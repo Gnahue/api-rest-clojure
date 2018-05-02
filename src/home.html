@@ -15,6 +15,14 @@
   <p> al hacer click en get all lo que hace es conectar a http://localhost:3000/example/api/car
     y trae el json con esa respuesta.<p>
 
+<label> id </label>
+<input id="id">
+<label> brand </label>
+<input id="brand">
+<label> model </label>
+<input id="model">
+<label> color </label>
+<input id="color">
 <button onclick="insertCar();">insert car</button>
 <button onclick="getAllCars();">get all </button>
 <table>
@@ -60,7 +68,7 @@ function insertCar(){
 	                type : "POST",
 	                contentType : "application/x-www-form-urlencoded; charset=utf-8",
 	                url : stringUrl,
-	                data : {"id":"3","color":"rosa","model":2,"brand":207},
+	                data : {"id":$("#id").val(),"color":$("#color").val(),"model":$("#model").val(),"brand":$("#brand").val()},
 	                cache : false,
 	                success : function(response) {
 
