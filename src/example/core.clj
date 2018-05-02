@@ -59,7 +59,9 @@
           color (get-in request [:params :color])
           car {:id id :brand brand :model model :color color}]
       (db-store-car car)
-      {:status 201 :body car}
+      { :headers {"Access-Control-Allow-Origin" "*"
+        "Access-Control-Allow-Methods" "GET, POST, PUT, OPTIONS"}
+        :status 201 :body car}
     )
   )
 
